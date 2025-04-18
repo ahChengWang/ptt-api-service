@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: ptt-api-service
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn main:app
+    envVars:
+      - key: "7369558775:AAEYH8cu2kmVEF8ittLwcHXDy_ruEtAC4VQ"
+        sync: false
+      - key: -4651251330
+        sync: false
+    autoDeploy: true
+
+cron:
+  - name: ptt-cron-job
+    schedule: "*/10 * * * *"  # 每 10 分鐘
+    command: "curl https://your-api-url.onrender.com/check"
