@@ -114,7 +114,7 @@ class checker():
         for title, url in reversed(new_info_articles):
             message = f"<b><b>🌟[情報更新]🌟</b></b>\n{title}\n{url}"
 
-            # send_telegram_message(message)
+            self.send_telegram_message(message)
 
         # 記錄最新一篇文章
         latest_sent_url = new_info_articles[0][1]
