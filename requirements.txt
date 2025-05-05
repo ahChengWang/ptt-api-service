@@ -2,3 +2,7 @@ flask
 requests
 beautifulsoup4
 gunicorn
+cloudscraper
+gspread
+google-auth
+python-dotenv
