@@ -12,6 +12,7 @@ def index():
 
 @app.route("/check")
 def check():
+    print("⏱ 查詢最新省錢版文章 ")
     check = checker()
     result = check.check_new_posts()
     return jsonify({"status": "done", "new_posts": result})
