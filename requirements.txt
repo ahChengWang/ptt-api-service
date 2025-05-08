@@ -6,3 +6,5 @@ cloudscraper
 gspread
 google-auth
 python-dotenv
+selenium
+webdriver_manager
