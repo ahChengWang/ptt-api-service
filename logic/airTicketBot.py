@@ -1,5 +1,5 @@
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
-from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
+# from telegram import InlineKeyboardMarkup, Update
+# from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 import requests
 from dotenv import load_dotenv
 import os
