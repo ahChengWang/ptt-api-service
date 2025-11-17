@@ -13,6 +13,7 @@ from selenium.webdriver.chrome.service import Service
 # from webdriver_manager.chrome import ChromeDriverManager
 # from selenium.webdriver.chrome.options import Options
 # from selenium.webdriver.common.by import By
+from playwright.sync_api import sync_playwright
 
 
 class checker():
@@ -83,12 +84,39 @@ class checker():
     def check_new_posts(self):
         last_url = self.load_last_urls()
         print("last_url=" + last_url)
-        scraper = cloudscraper.create_scraper()  # 模擬瀏覽器
-        res = scraper.get(self.PTT_URL, headers=self.HEADERS)
-        soup = BeautifulSoup(res.text, "html.parser")
+        containers = []
+
+        with sync_playwright() as p:
+            # Launch headless Chromium
+            browser = p.chromium.launch(headless=True)
+            context = browser.new_context()
+
+            # Apply headers if needed
+            page = context.new_page()
+            page.set_extra_http_headers(self.HEADERS)
+
+            # Visit the page
+            # 60 秒 timeout，避免 Cloudflare 卡
+            page.goto(self.PTT_URL, timeout=60000)
+
+            # Get final rendered HTML
+            html = page.content()
+
+            browser.close()
+
+            # Parse with BeautifulSoup
+            soup = BeautifulSoup(html, "html.parser")
+
+            # Your original selector
+            containers = soup.select("div.title a")
+
+        # scraper = cloudscraper.create_scraper()  # 模擬瀏覽器
+        # res = scraper.get(self.PTT_URL, headers=self.HEADERS)
+        # soup = BeautifulSoup(res.text, "html.parser")
+        # containers = soup.select("div.title a")
+
         latest_title = ""
-        print("soup=" + str(soup.text).replace('\n\n\n', ''))
-        containers = soup.select("div.title a")
+        print("soup=" + str(soup.text).replace('\n\n\n', '').replace('\n\n', ''))
 
         new_info_articles = []
 
