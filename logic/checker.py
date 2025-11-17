@@ -82,12 +82,14 @@ class checker():
 
     def check_new_posts(self):
         last_url = self.load_last_urls()
+        print("last_url=" + last_url)
         scraper = cloudscraper.create_scraper()  # 模擬瀏覽器
         res = scraper.get(self.PTT_URL, headers=self.HEADERS)
         soup = BeautifulSoup(res.text, "html.parser")
         latest_title = ""
-
+        print("soup=" + str(soup.text).replace('\n\n\n', ''))
         containers = soup.select("div.title a")
+
         new_info_articles = []
 
         if not containers:
