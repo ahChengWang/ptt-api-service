@@ -10,9 +10,9 @@ from google.oauth2.service_account import Credentials
 from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
+# from webdriver_manager.chrome import ChromeDriverManager
+# from selenium.webdriver.chrome.options import Options
+# from selenium.webdriver.common.by import By
 
 
 class checker():
@@ -128,42 +128,42 @@ class checker():
 
         return [url for _, url in new_info_articles]
 
-    def get_dcard_latest_posts(self, last_url_dcard: str) -> list:
-        # 建立瀏覽器選項
-        options = Options()
-        options.add_argument('--headless')  # 無頭模式
-        options.add_argument('--disable-gpu')
-        options.add_argument('--no-sandbox')
-        options.add_argument('--window-size=1920,1080')
-        options.add_argument('--disable-dev-shm-usage')
-        options.add_argument(
-            "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+    # def get_dcard_latest_posts(self, last_url_dcard: str) -> list:
+    #     # 建立瀏覽器選項
+    #     options = Options()
+    #     options.add_argument('--headless')  # 無頭模式
+    #     options.add_argument('--disable-gpu')
+    #     options.add_argument('--no-sandbox')
+    #     options.add_argument('--window-size=1920,1080')
+    #     options.add_argument('--disable-dev-shm-usage')
+    #     options.add_argument(
+    #         "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
 
-        # 啟動 Selenium
-        driver = webdriver.Chrome(service=Service(
-            ChromeDriverManager().install()), options=options)
+    #     # 啟動 Selenium
+    #     driver = webdriver.Chrome(service=Service(
+    #         ChromeDriverManager().install()), options=options)
 
-        # 前往省錢版最新文章頁面
-        url = "https://www.dcard.tw/f/savemoney?tab=latest"
-        driver.get(url)
-        time.sleep(15)  # 等待 JavaScript 渲染
+    #     # 前往省錢版最新文章頁面
+    #     url = "https://www.dcard.tw/f/savemoney?tab=latest"
+    #     driver.get(url)
+    #     time.sleep(15)  # 等待 JavaScript 渲染
 
-        # 抓出所有文章卡片
-        posts = driver.find_elements(
-            By.CSS_SELECTOR, "a[href^='/f/savemoney/p/']")
+    #     # 抓出所有文章卡片
+    #     posts = driver.find_elements(
+    #         By.CSS_SELECTOR, "a[href^='/f/savemoney/p/']")
 
-        for post in posts[:5]:  # 前5篇
-            try:
-                title_element = post.find_element(By.CSS_SELECTOR, "h2")
-                link_element = post.find_element(
-                    By.CSS_SELECTOR, "a[href^='/f/savemoney/p/']")
-                title = title_element.text.strip()
-                url = "https://www.dcard.tw" + \
-                    link_element.get_attribute("href")
-                print(f"{title}\n{url}\n")
-            except Exception as e:
-                continue
+    #     for post in posts[:5]:  # 前5篇
+    #         try:
+    #             title_element = post.find_element(By.CSS_SELECTOR, "h2")
+    #             link_element = post.find_element(
+    #                 By.CSS_SELECTOR, "a[href^='/f/savemoney/p/']")
+    #             title = title_element.text.strip()
+    #             url = "https://www.dcard.tw" + \
+    #                 link_element.get_attribute("href")
+    #             print(f"{title}\n{url}\n")
+    #         except Exception as e:
+    #             continue
 
-        driver.quit()
+    #     driver.quit()
 
-        return []
+    #     return []

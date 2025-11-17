@@ -7,5 +7,4 @@ gspread
 google-auth
 python-dotenv
 selenium
-webdriver_manager
-telegram
+# webdriver_manager
